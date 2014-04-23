@@ -7,4 +7,5 @@ $:.unshift("#{File.dirname(__FILE__)}/../lib") unless $:.include?("#{File.dirnam
 
 require "josm_presets_ja_naming_sample"
 
-JosmPresetsJaNamingSample.new.web_read
+JosmPresetsJaNamingSample.new.puts_presets
+

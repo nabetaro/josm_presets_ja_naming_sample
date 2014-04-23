@@ -9,7 +9,7 @@ require "josm_presets_ja_naming_sample/version"
 class JosmPresetsJaNamingSample
   WWW_PAGE = "http://wiki.openstreetmap.org/wiki/JA:Naming_sample"
 
-  def web_read
+  def puts_prestes
     doc = Nokogiri::HTML(open(WWW_PAGE))
     puts preset(doc)
   end
