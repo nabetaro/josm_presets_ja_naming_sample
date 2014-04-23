@@ -1,4 +1,7 @@
 #!/usr/bin/env ruby
+# coding: utf-8
+
+# Copyright(c) Nozomu KURASAWA 2014
 
 $:.unshift("#{File.dirname(__FILE__)}/../lib") unless $:.include?("#{File.dirname(__FILE__)}/../lib")
 

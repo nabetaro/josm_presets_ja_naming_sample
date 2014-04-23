@@ -1,4 +1,6 @@
 # coding: utf-8
+# Copyright(c) Nozomu KURASAWA 2014
+
 require 'nokogiri'
 require 'open-uri'
 require "cgi"
