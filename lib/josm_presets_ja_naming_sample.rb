@@ -9,11 +9,17 @@ require "josm_presets_ja_naming_sample/version"
 class JosmPresetsJaNamingSample
   WWW_PAGE = "http://wiki.openstreetmap.org/wiki/JA:Naming_sample"
 
+  # === Output Presets xml to STDOUT
   def puts_prestes
     doc = Nokogiri::HTML(open(WWW_PAGE))
     puts preset(doc)
   end
 
+  # === Presets (whole)
+  # ==== params
+  # _doc_:: wikipage (Nokogiri::Node)
+  # ==== return
+  # String:: presets
   def preset(doc)
     str = ""
 str << <<EOS
@@ -43,6 +49,13 @@ EOS
     return str
   end
 
+  # === Presets in a wikitable
+  # ==== params
+  # _record_:: rows of wikitable (Nokogiri::Node)
+  # _title_::  title of wikitable (for tag) (Nokogiri::Node)
+  # _desc_::   description of wikitable (Nokogiri::Node)
+  # ==== return
+  # String:: group entry
   def preset_group(group,title,desc)
     group_str = ""
     group_str << <<EOS
@@ -57,8 +70,27 @@ EOS
 EOS
   end
 
+  # === Presets for a item
+  # expect follow colomns
+  #
+  # {| class=wikitable
+  # | name
+  # | name:en
+  # | name:ja
+  # | name:ja_rm
+  # | branch(example)
+  # | brand
+  # | operator(example)
+  # | memo
+  # |----
+  # ...
+  # |}
+  # ==== params
+  # _record_:: rows of wikitable (Nokogiri::Node)
+  # _title_::  title of wikitable (for tag) (Nokogiri::Node)
+  # _desc_::   description of wikitable (Nokogiri::Node)
   # ==== return
-  # String:: item String.
+  # String:: item entry
   def preset_item(record,title,desc)
     k,v = parse_key_value(title)
     cols = record.css("td")
@@ -83,11 +115,21 @@ EOS
   end
 
 
+  # === string for node
+  # ==== params
+  # _node_:: Nokogiri::Node
+  # ==== return
+  # String:: xml encoded string
   def strip_value(node)
     return  "" if node.nil?
     return node.content.strip.encode(xml: :text)
   end
 
+  # === parse "key=value" in a node
+  # ==== params
+  # _node_:: Nokogiri::Node
+  # ==== return
+  # String, String:: xml encoded string for KEY and VALUE
   def parse_key_value(node)
     strip_value(node) =~ /(\w+=\w+)/
     $1 =~ /(\w+)=(\w+)/
