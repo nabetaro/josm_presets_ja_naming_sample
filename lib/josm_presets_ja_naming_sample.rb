@@ -10,7 +10,7 @@ class JosmPresetsJaNamingSample
   WWW_PAGE = "http://wiki.openstreetmap.org/wiki/JA:Naming_sample"
 
   # === Output Presets xml to STDOUT
-  def puts_prestes
+  def puts_presets
     doc = Nokogiri::HTML(open(WWW_PAGE))
     puts preset(doc)
   end
@@ -107,7 +107,15 @@ EOS
   <key key="brand" value="#{strip_value(cols[5])}" />
   <optional>
     <text key="branch" text="支店名 #{strip_value(cols[4]).nil? ? '' : "(例: #{strip_value(cols[4])})"}" />
-    <combo key="operator" values="#{strip_value(cols[6])}" text="運営主体 (企業名など)" editable="true"/>
+    <combo key="operator" values="#{strip_value(cols[6])}"
+           text="運営主体 (企業名など)" editable="true"/>
+    <combo key="smoking" values="dedicated,yes,separated,isolated,no"
+           display_values="喫煙専用,喫煙可,分煙,隔離,喫煙不可"
+           text="喫煙可否" editable="false"/>
+    <combo key="toilets" values="yes,no"
+           display_values="あり,なし" text="トイレ" />
+    <combo key="wheelchair" values="yes,limited,no,designated"
+           text="車椅子利用" />
   </optional>
   <label text="#{strip_value(cols[7])}" />
 </item>
